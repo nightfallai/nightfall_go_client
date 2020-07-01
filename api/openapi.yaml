@@ -1,0 +1,206 @@
+openapi: 3.0.1
+info:
+  description: This API exposes detectors for sensitive data in arbitrary string payloads.
+  title: Methods
+  version: 0.0.1
+servers:
+- url: https://api.nightfall.ai/v1
+security:
+- apiKeyAuth: []
+paths:
+  /scan:
+    post:
+      description: Provide a list of arbitrary string data, and scan each item with
+        the provided detectors to uncover sensitive information. Returns a list equal
+        in size to the number of provided string payloads. The item at each list index
+        will be a list of all matches for the provided detectors, or an empty list
+        if no occurrences are found.
+      operationId: ScanPayload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponseArray'
+          description: Successful operation
+          headers:
+            Content-Type:
+              description: the content type of the response
+              explode: false
+              schema:
+                type: string
+              style: simple
+      security:
+      - apiKeyAuth: []
+      summary: Scan for sensitive information in your data
+      tags:
+      - scan
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: '''application/json'''
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:679663525012:function:api_platform_lambda/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      x-codegen-request-body-name: ScanReq
+components:
+  schemas:
+    Empty:
+      type: object
+    ScanRequest:
+      description: The request body of the /scan endpoint
+      example:
+        payload:
+          items:
+          - items
+          - items
+        detectors:
+        - name: API_KEY
+        - name: API_KEY
+      properties:
+        detectors:
+          description: A list of detector objects with which you wish to scan the
+            request payload.
+          items:
+            $ref: '#/components/schemas/ScanRequest_detectors'
+          type: array
+        payload:
+          $ref: '#/components/schemas/ScanRequest_payload'
+      type: object
+    ScanResponseArray:
+      items:
+        $ref: '#/components/schemas/EachItemArray'
+      type: array
+    EachItemArray:
+      items:
+        $ref: '#/components/schemas/ScanResponse'
+      type: array
+    ScanResponse:
+      properties:
+        fragment:
+          description: the text sample that was flagged
+          type: string
+        detector:
+          description: the data type flagged in the text fragment
+          type: string
+        confidence:
+          $ref: '#/components/schemas/ScanResponse_confidence'
+        location:
+          $ref: '#/components/schemas/ScanResponse_location'
+      type: object
+    ScanRequest_detectors:
+      example:
+        name: API_KEY
+      properties:
+        name:
+          description: The name of the detector, one of the following enum values.
+          enum:
+          - API_KEY
+          - RANDOMLY_GENERATED_TOKEN
+          - CRYPTOGRAPHIC_TOKEN
+          - CREDIT_CARD_NUMBER
+          - US_SOCIAL_SECURITY_NUMBER
+          - AMERICAN_BANKERS_CUSIP_ID
+          - US_BANK_ROUTING_MICR
+          - ICD_10_CODE
+          - US_DRIVERS_LICENSE_NUMBER
+          - US_PASSPORT
+          - PHONE_NUMBER
+          - IP_ADDRESS
+          - EMAIL_ADDRESS
+          type: string
+    ScanRequest_payload:
+      description: The text sample(s) you wish to scan. This data is passed as a string
+        list, so you may choose to segment your text into multiple items for better
+        granularity. The aggregate size of your text (summed across all items in the
+        list) must not exceed 500 KB for any individual request, and the number of
+        items in that list may not exceed 50,000.
+      example:
+        items:
+        - items
+        - items
+      properties:
+        items:
+          description: A collection of strings to scan
+          items:
+            type: string
+          type: array
+    ScanResponse_confidence:
+      properties:
+        bucket:
+          description: the predicted likelihood the fragment contains the indicated
+            data type
+          enum:
+          - VERY_UNLIKELY
+          - UNLIKELY
+          - POSSIBLE
+          - LIKELY
+          - VERY_LIKELY
+          type: string
+    ScanResponse_location_byteRange:
+      properties:
+        start:
+          description: the index of the fragment's starting byte
+          type: integer
+        end:
+          description: the index of the fragment's ending byte
+          type: integer
+    ScanResponse_location_unicodeRange:
+      properties:
+        start:
+          description: the index of the fragment's starting unicode character
+          type: integer
+        end:
+          description: the index of the fragment's ending unicode character
+          type: integer
+    ScanResponse_location:
+      properties:
+        byteRange:
+          $ref: '#/components/schemas/ScanResponse_location_byteRange'
+        unicodeRange:
+          $ref: '#/components/schemas/ScanResponse_location_unicodeRange'
+  securitySchemes:
+    apiKeyAuth:
+      in: header
+      name: x-api-key
+      type: apiKey
+x-amazon-apigateway-documentation:
+  version: v2.1
+  createdDate: 2016-11-17T07:03:59.000Z
+  documentationParts:
+  - location:
+      type: API
+    properties:
+      info:
+        description: This API exposes detectors for sensitive data in arbitrary string
+          payloads.
+  - location:
+      type: METHOD
+      path: /scan
+      method: POST
+    properties:
+      tags:
+      - scan
+      summary: Verify whether the given string matches any of the sensitive data types
+  - location:
+      type: REQUEST_BODY
+      path: /scan
+      method: POST
+    properties:
+      description: Object containing the string payload to scan, as well as the sensitive
+        data types to verify against.
+  - location:
+      type: RESPONSE
+      method: '*'
+      statusCode: "200"
+    properties:
+      description: Successful operation
