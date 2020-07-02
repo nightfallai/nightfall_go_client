@@ -111,6 +111,7 @@ components:
           - US_SOCIAL_SECURITY_NUMBER
           - AMERICAN_BANKERS_CUSIP_ID
           - US_BANK_ROUTING_MICR
+          - ICD_9_CODE
           - ICD_10_CODE
           - US_DRIVERS_LICENSE_NUMBER
           - US_PASSPORT
