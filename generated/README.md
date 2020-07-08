@@ -37,6 +37,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [Detector](docs/Detector.md)
+ - [Likelihood](docs/Likelihood.md)
  - [ScanRequest](docs/ScanRequest.md)
  - [ScanRequestDetectors](docs/ScanRequestDetectors.md)
  - [ScanRequestPayload](docs/ScanRequestPayload.md)
