@@ -8,7 +8,7 @@
  */
 
 package openapi
-// NightfallDetectorType the model 'NightfallDetectorType'
+// NightfallDetectorType The name for a Nightfall detector.
 type NightfallDetectorType string
 
 // List of NightfallDetectorType

@@ -8,7 +8,7 @@
  */
 
 package openapi
-// Confidence the model 'Confidence'
+// Confidence The confidence level of a finding.
 type Confidence string
 
 // List of Confidence

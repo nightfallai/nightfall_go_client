@@ -200,6 +200,7 @@ components:
           type: boolean
       type: object
     NightfallDetectorType:
+      description: The name for a Nightfall detector.
       enum:
       - API_KEY
       - RANDOMLY_GENERATED_TOKEN
@@ -217,6 +218,7 @@ components:
       - EMAIL_ADDRESS
       type: string
     Confidence:
+      description: The confidence level of a finding.
       enum:
       - VERY_UNLIKELY
       - UNLIKELY
@@ -281,6 +283,8 @@ components:
         unicodeRange:
           $ref: '#/components/schemas/ScanResponse_location_unicodeRange'
     ContextRule_proximity:
+      description: The object containing the length of characters before and after
+        finding to evaluate context.
       properties:
         windowBefore:
           description: The number of leading characters to include as context before
@@ -291,7 +295,7 @@ components:
             the finding itself.
           type: integer
     ContextRule_confidenceAdjustment:
-      description: The confidence level to adjust findings to.
+      description: The object containing the confidence level to adjust findings to.
       properties:
         fixedConfidence:
           $ref: '#/components/schemas/Confidence'
