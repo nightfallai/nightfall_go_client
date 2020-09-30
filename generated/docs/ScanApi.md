@@ -1,6 +1,6 @@
 # \ScanApi
 
-All URIs are relative to *https://api.nightfall.ai/v1*
+All URIs are relative to *https://api.nightfall.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -22,7 +22,7 @@ Provide a list of arbitrary string data, and scan each item with the provided de
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**scanReq** | [**ScanRequest**](ScanRequest.md)|  | 
+**scanReq** | [**UNKNOWN_BASE_TYPE**](UNKNOWN_BASE_TYPE.md)|  | 
 
 ### Return type
 

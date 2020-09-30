@@ -1,0 +1,344 @@
+openapi: 3.0.1
+info:
+  description: This API exposes detectors for sensitive data in arbitrary string payloads.
+  title: Methods
+  version: 0.0.1
+servers:
+- url: https://api.nightfall.ai/
+security:
+- apiKeyAuth: []
+paths:
+  /scan:
+    post:
+      description: Provide a list of arbitrary string data, and scan each item with
+        the provided detectors to uncover sensitive information. Returns a list equal
+        in size to the number of provided string payloads. The item at each list index
+        will be a list of all matches for the provided detectors, or an empty list
+        if no occurrences are found.
+      operationId: ScanPayload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ScanRequest'
+              - $ref: '#/components/schemas/ScanRequestV2'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponseArray'
+          description: Successful operation
+          headers:
+            Content-Type:
+              description: the content type of the response
+              explode: false
+              schema:
+                type: string
+              style: simple
+      security:
+      - apiKeyAuth: []
+      summary: Scan for sensitive information in your data
+      tags:
+      - scan
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: '''application/json'''
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:679663525012:function:api_platform_lambda:${stageVariables.lambdaAlias}/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      x-codegen-request-body-name: ScanReq
+components:
+  schemas:
+    Empty:
+      type: object
+    ScanRequest:
+      description: The request body of the v1/scan endpoint
+      properties:
+        detectors:
+          description: A list of detector objects with which you wish to scan the
+            request payload.
+          items:
+            $ref: '#/components/schemas/ScanRequest_detectors'
+          type: array
+        payload:
+          $ref: '#/components/schemas/ScanRequest_payload'
+      type: object
+    ScanRequestV2:
+      description: The request body of the v2/scan endpoint
+      properties:
+        config:
+          $ref: '#/components/schemas/ScanRequestV2_config'
+        payload:
+          $ref: '#/components/schemas/ScanRequest_payload'
+      type: object
+    ScanResponseArray:
+      items:
+        $ref: '#/components/schemas/EachItemArray'
+      type: array
+    EachItemArray:
+      items:
+        $ref: '#/components/schemas/ScanResponse'
+      type: array
+    ScanResponse:
+      properties:
+        fragment:
+          description: The text sample that was flagged.
+          type: string
+        detector:
+          description: The data type flagged in the text fragment.
+          type: string
+        confidence:
+          $ref: '#/components/schemas/ScanResponse_confidence'
+        location:
+          $ref: '#/components/schemas/ScanResponse_location'
+      type: object
+    EachConditionArray:
+      items:
+        $ref: '#/components/schemas/Condition'
+      type: array
+    Condition:
+      description: An inclusion condition within a condition set.
+      properties:
+        minNumFindings:
+          description: The minimum number of findings for this detector.
+          type: integer
+        minConfidence:
+          $ref: '#/components/schemas/Confidence'
+        detector:
+          $ref: '#/components/schemas/Detector'
+      type: object
+    Detector:
+      properties:
+        displayName:
+          description: The display name for this detector's findings in the response.
+          type: string
+        detectorType:
+          description: The type of detector.
+          enum:
+          - NIGHTFALL_DETECTOR
+          - REGEX
+          - WORD_LIST
+          type: string
+        nightfallDetector:
+          $ref: '#/components/schemas/DetectorInfoType'
+        regex:
+          $ref: '#/components/schemas/Regex'
+        wordList:
+          $ref: '#/components/schemas/WordList'
+        contextRules:
+          description: A list of context rules.
+          items:
+            $ref: '#/components/schemas/ContextRule'
+          type: array
+        exclusionRules:
+          description: A list of exclusion rules.
+          items:
+            $ref: '#/components/schemas/ExclusionRule'
+          type: array
+      type: object
+    ContextRule:
+      description: A context rule adjusts the finding confidence based on surrounding
+        context.
+      properties:
+        regex:
+          $ref: '#/components/schemas/Regex'
+        proximity:
+          $ref: '#/components/schemas/ContextRule_proximity'
+        confidenceAdjustment:
+          $ref: '#/components/schemas/ContextRule_confidenceAdjustment'
+      type: object
+    ExclusionRule:
+      description: An exclusion rule removes findings that match the rule's given
+        exlusion.
+      properties:
+        matchType:
+          description: The match type of exclusion rule.
+          enum:
+          - PARTIAL
+          - FULL
+          type: string
+        exclusionType:
+          description: The type of exclusion rule.
+          enum:
+          - REGEX
+          - WORD_LIST
+          type: string
+        regex:
+          $ref: '#/components/schemas/Regex'
+        wordList:
+          $ref: '#/components/schemas/WordList'
+      type: object
+    Regex:
+      description: The regex object for the regex detector, context rules, and exclusion
+        rules.
+      properties:
+        pattern:
+          description: The regex pattern to match on.
+          type: string
+        isCaseSensitive:
+          description: The case sensitivity for the regex pattern.
+          type: boolean
+      type: object
+    WordList:
+      description: The WordList object for wordList detector and exclusion rules.
+      properties:
+        values:
+          description: A list of words for wordList.
+          items:
+            type: string
+          type: array
+        isCaseSensitive:
+          description: The case sensitivity for words in the wordList. If false, ignore
+            the case of findings.
+          type: boolean
+      type: object
+    DetectorInfoType:
+      enum:
+      - API_KEY
+      - RANDOMLY_GENERATED_TOKEN
+      - CRYPTOGRAPHIC_TOKEN
+      - CREDIT_CARD_NUMBER
+      - US_SOCIAL_SECURITY_NUMBER
+      - AMERICAN_BANKERS_CUSIP_ID
+      - US_BANK_ROUTING_MICR
+      - ICD9_CODE
+      - ICD10_CODE
+      - US_DRIVERS_LICENSE_NUMBER
+      - US_PASSPORT
+      - PHONE_NUMBER
+      - IP_ADDRESS
+      - EMAIL_ADDRESS
+      type: string
+    Confidence:
+      enum:
+      - VERY_UNLIKELY
+      - UNLIKELY
+      - POSSIBLE
+      - LIKELY
+      - VERY_LIKELY
+      type: string
+    ScanRequest_detectors:
+      properties:
+        name:
+          $ref: '#/components/schemas/DetectorInfoType'
+    ScanRequest_payload:
+      description: The text sample(s) you wish to scan. This data is passed as a string
+        list, so you may choose to segment your text into multiple items for better
+        granularity. The aggregate size of your text (summed across all items in the
+        list) must not exceed 500 KB for any individual request, and the number of
+        items in that list may not exceed 50,000.
+      properties:
+        items:
+          description: A collection of strings to scan.
+          items:
+            type: string
+          type: array
+    ScanRequestV2_config:
+      description: Config can contain either a conditionSetUUID or a list of inline
+        conditions to scan the request payload with.
+      properties:
+        conditionSetUUID:
+          description: The UUID corresponding to the condition set with which you
+            wish to scan the request payload.
+          type: string
+        conditions:
+          description: A list of conditions with which you wish to scan the request
+            payload.
+          items:
+            $ref: '#/components/schemas/EachConditionArray'
+          type: array
+    ScanResponse_confidence:
+      properties:
+        bucket:
+          $ref: '#/components/schemas/Likelihood'
+    ScanResponse_location_byteRange:
+      properties:
+        start:
+          description: The index of the fragment's starting byte.
+          type: integer
+        end:
+          description: The index of the fragment's ending byte.
+          type: integer
+    ScanResponse_location_unicodeRange:
+      properties:
+        start:
+          description: The index of the fragment's starting unicode character.
+          type: integer
+        end:
+          description: The index of the fragment's ending unicode character.
+          type: integer
+    ScanResponse_location:
+      properties:
+        byteRange:
+          $ref: '#/components/schemas/ScanResponse_location_byteRange'
+        unicodeRange:
+          $ref: '#/components/schemas/ScanResponse_location_unicodeRange'
+    ContextRule_proximity:
+      properties:
+        windowBefore:
+          description: The number of leading characters to include as context before
+            the finding itself.
+          type: integer
+        windowAfter:
+          description: The number of trailing characters to include as context after
+            the finding itself.
+          type: integer
+    ContextRule_confidenceAdjustment:
+      description: The confidence to adjust finding to on found context.
+      properties:
+        fixedConfidence:
+          $ref: '#/components/schemas/Confidence'
+  securitySchemes:
+    apiKeyAuth:
+      in: header
+      name: x-api-key
+      type: apiKey
+x-amazon-apigateway-documentation:
+  version: v2.1
+  createdDate: 2016-11-17T07:03:59.000Z
+  documentationParts:
+  - location:
+      type: API
+    properties:
+      info:
+        description: This API exposes detectors for sensitive data in arbitrary string
+          payloads.
+  - location:
+      type: METHOD
+      path: /scan
+      method: POST
+    properties:
+      tags:
+      - scan
+      summary: Verify whether the given string matches any of the sensitive data types
+  - location:
+      type: REQUEST_BODY
+      path: /scan
+      method: POST
+    properties:
+      description: Object containing the string payload to scan, as well as the sensitive
+        data types to verify against.
+  - location:
+      type: RESPONSE
+      method: '*'
+      statusCode: "200"
+    properties:
+      description: Successful operation
+x-amazon-apigateway-gateway-responses:
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: 404
+    responseTemplates:
+      application/json: |-
+        {
+             "message": "resource not found",
+             "path": "$context.path",
+             "httpMethod": "$context.httpMethod",
+             "statusCode": 404
+        }

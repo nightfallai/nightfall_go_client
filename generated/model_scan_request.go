@@ -8,7 +8,7 @@
  */
 
 package openapi
-// ScanRequest The request body of the /scan endpoint
+// ScanRequest The request body of the v1/scan endpoint
 type ScanRequest struct {
 	// A list of detector objects with which you wish to scan the request payload.
 	Detectors []ScanRequestDetectors `json:"detectors,omitempty"`

@@ -1,11 +1,11 @@
-# ScanResponseLocationByteRange
+# WordList
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Start** | **int32** | The index of the fragment&#39;s starting byte. | [optional] 
-**End** | **int32** | The index of the fragment&#39;s ending byte. | [optional] 
+**Values** | **[]string** | A list of words for wordList. | [optional] 
+**IsCaseSensitive** | **bool** | The case sensitivity for words in the wordList. If false, ignore the case of findings. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

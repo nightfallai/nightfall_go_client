@@ -8,7 +8,8 @@
  */
 
 package openapi
-// ScanRequestDetectors struct for ScanRequestDetectors
-type ScanRequestDetectors struct {
-	Name DetectorInfoType `json:"name,omitempty"`
+// ScanRequestV2 The request body of the v2/scan endpoint
+type ScanRequestV2 struct {
+	Config ScanRequestV2Config `json:"config,omitempty"`
+	Payload ScanRequestPayload `json:"payload,omitempty"`
 }

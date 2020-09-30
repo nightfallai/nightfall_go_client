@@ -31,7 +31,7 @@ Provide a list of arbitrary string data, and scan each item with the provided de
  * @param scanReq
 @return [][]ScanResponse
 */
-func (a *ScanApiService) ScanPayload(ctx _context.Context, scanReq ScanRequest) ([][]ScanResponse, *_nethttp.Response, error) {
+func (a *ScanApiService) ScanPayload(ctx _context.Context, scanReq UNKNOWN_BASE_TYPE) ([][]ScanResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}

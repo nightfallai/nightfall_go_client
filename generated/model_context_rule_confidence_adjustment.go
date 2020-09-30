@@ -8,7 +8,7 @@
  */
 
 package openapi
-// ScanRequestDetectors struct for ScanRequestDetectors
-type ScanRequestDetectors struct {
-	Name DetectorInfoType `json:"name,omitempty"`
+// ContextRuleConfidenceAdjustment The confidence to adjust finding to on found context.
+type ContextRuleConfidenceAdjustment struct {
+	FixedConfidence Confidence `json:"fixedConfidence,omitempty"`
 }

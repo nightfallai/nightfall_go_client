@@ -28,7 +28,7 @@ import "./openapi"
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.nightfall.ai/v1*
+All URIs are relative to *https://api.nightfall.ai*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -37,16 +37,26 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [Condition](docs/Condition.md)
+ - [Confidence](docs/Confidence.md)
+ - [ContextRule](docs/ContextRule.md)
+ - [ContextRuleConfidenceAdjustment](docs/ContextRuleConfidenceAdjustment.md)
+ - [ContextRuleProximity](docs/ContextRuleProximity.md)
  - [Detector](docs/Detector.md)
- - [Likelihood](docs/Likelihood.md)
+ - [DetectorInfoType](docs/DetectorInfoType.md)
+ - [ExclusionRule](docs/ExclusionRule.md)
+ - [Regex](docs/Regex.md)
  - [ScanRequest](docs/ScanRequest.md)
  - [ScanRequestDetectors](docs/ScanRequestDetectors.md)
  - [ScanRequestPayload](docs/ScanRequestPayload.md)
+ - [ScanRequestV2](docs/ScanRequestV2.md)
+ - [ScanRequestV2Config](docs/ScanRequestV2Config.md)
  - [ScanResponse](docs/ScanResponse.md)
  - [ScanResponseConfidence](docs/ScanResponseConfidence.md)
  - [ScanResponseLocation](docs/ScanResponseLocation.md)
  - [ScanResponseLocationByteRange](docs/ScanResponseLocationByteRange.md)
  - [ScanResponseLocationUnicodeRange](docs/ScanResponseLocationUnicodeRange.md)
+ - [WordList](docs/WordList.md)
 
 
 ## Documentation For Authorization

@@ -10,6 +10,5 @@
 package openapi
 // ScanResponseConfidence struct for ScanResponseConfidence
 type ScanResponseConfidence struct {
-	// the predicted likelihood the fragment contains the indicated data type
-	Bucket string `json:"bucket,omitempty"`
+	Bucket Likelihood `json:"bucket,omitempty"`
 }

@@ -8,23 +8,17 @@
  */
 
 package openapi
-// Detector the model 'Detector'
-type Detector string
-
-// List of Detector
-const (
-	API_KEY Detector = "API_KEY"
-	RANDOMLY_GENERATED_TOKEN Detector = "RANDOMLY_GENERATED_TOKEN"
-	CRYPTOGRAPHIC_KEY Detector = "CRYPTOGRAPHIC_KEY"
-	CREDIT_CARD_NUMBER Detector = "CREDIT_CARD_NUMBER"
-	US_SOCIAL_SECURITY_NUMBER Detector = "US_SOCIAL_SECURITY_NUMBER"
-	AMERICAN_BANKERS_CUSIP_ID Detector = "AMERICAN_BANKERS_CUSIP_ID"
-	US_BANK_ROUTING_MICR Detector = "US_BANK_ROUTING_MICR"
-	ICD9_CODE Detector = "ICD9_CODE"
-	ICD10_CODE Detector = "ICD10_CODE"
-	US_DRIVERS_LICENSE_NUMBER Detector = "US_DRIVERS_LICENSE_NUMBER"
-	US_PASSPORT Detector = "US_PASSPORT"
-	PHONE_NUMBER Detector = "PHONE_NUMBER"
-	IP_ADDRESS Detector = "IP_ADDRESS"
-	EMAIL_ADDRESS Detector = "EMAIL_ADDRESS"
-)
+// Detector struct for Detector
+type Detector struct {
+	// The display name for this detector's findings in the response.
+	DisplayName string `json:"displayName,omitempty"`
+	// The type of detector.
+	DetectorType string `json:"detectorType,omitempty"`
+	NightfallDetector DetectorInfoType `json:"nightfallDetector,omitempty"`
+	Regex Regex `json:"regex,omitempty"`
+	WordList WordList `json:"wordList,omitempty"`
+	// A list of context rules.
+	ContextRules []ContextRule `json:"contextRules,omitempty"`
+	// A list of exclusion rules.
+	ExclusionRules []ExclusionRule `json:"exclusionRules,omitempty"`
+}

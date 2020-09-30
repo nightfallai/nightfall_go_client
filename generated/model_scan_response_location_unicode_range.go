@@ -10,8 +10,8 @@
 package openapi
 // ScanResponseLocationUnicodeRange struct for ScanResponseLocationUnicodeRange
 type ScanResponseLocationUnicodeRange struct {
-	// the index of the fragment's starting unicode character
+	// The index of the fragment's starting unicode character.
 	Start int32 `json:"start,omitempty"`
-	// the index of the fragment's ending unicode character
+	// The index of the fragment's ending unicode character.
 	End int32 `json:"end,omitempty"`
 }

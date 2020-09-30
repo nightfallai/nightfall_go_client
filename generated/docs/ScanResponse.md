@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Fragment** | **string** | the text sample that was flagged | [optional] 
-**Detector** | **string** | the data type flagged in the text fragment | [optional] 
+**Fragment** | **string** | The text sample that was flagged. | [optional] 
+**Detector** | **string** | The data type flagged in the text fragment. | [optional] 
 **Confidence** | [**ScanResponseConfidence**](ScanResponse_confidence.md) |  | [optional] 
 **Location** | [**ScanResponseLocation**](ScanResponse_location.md) |  | [optional] 
 
