@@ -127,7 +127,7 @@ components:
           - WORD_LIST
           type: string
         nightfallDetector:
-          $ref: '#/components/schemas/DetectorInfoType'
+          $ref: '#/components/schemas/NightfallDetectorType'
         regex:
           $ref: '#/components/schemas/Regex'
         wordList:
@@ -199,7 +199,7 @@ components:
             the case of findings.
           type: boolean
       type: object
-    DetectorInfoType:
+    NightfallDetectorType:
       enum:
       - API_KEY
       - RANDOMLY_GENERATED_TOKEN
@@ -227,7 +227,7 @@ components:
     ScanRequest_detectors:
       properties:
         name:
-          $ref: '#/components/schemas/DetectorInfoType'
+          $ref: '#/components/schemas/NightfallDetectorType'
     ScanRequest_payload:
       description: The text sample(s) you wish to scan. This data is passed as a string
         list, so you may choose to segment your text into multiple items for better
@@ -291,7 +291,7 @@ components:
             the finding itself.
           type: integer
     ContextRule_confidenceAdjustment:
-      description: The confidence to adjust finding to on found context.
+      description: The confidence level to adjust findings to.
       properties:
         fixedConfidence:
           $ref: '#/components/schemas/Confidence'

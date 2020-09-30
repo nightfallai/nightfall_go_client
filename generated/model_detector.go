@@ -14,7 +14,7 @@ type Detector struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// The type of detector.
 	DetectorType string `json:"detectorType,omitempty"`
-	NightfallDetector DetectorInfoType `json:"nightfallDetector,omitempty"`
+	NightfallDetector NightfallDetectorType `json:"nightfallDetector,omitempty"`
 	Regex Regex `json:"regex,omitempty"`
 	WordList WordList `json:"wordList,omitempty"`
 	// A list of context rules.

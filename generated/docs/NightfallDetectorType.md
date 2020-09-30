@@ -1,4 +1,4 @@
-# DetectorInfoType
+# NightfallDetectorType
 
 ## Properties
 

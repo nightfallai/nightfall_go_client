@@ -8,7 +8,7 @@
  */
 
 package openapi
-// ContextRuleConfidenceAdjustment The confidence to adjust finding to on found context.
+// ContextRuleConfidenceAdjustment The confidence level to adjust findings to.
 type ContextRuleConfidenceAdjustment struct {
 	FixedConfidence Confidence `json:"fixedConfidence,omitempty"`
 }

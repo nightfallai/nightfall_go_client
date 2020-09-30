@@ -10,5 +10,5 @@
 package openapi
 // ScanRequestDetectors struct for ScanRequestDetectors
 type ScanRequestDetectors struct {
-	Name DetectorInfoType `json:"name,omitempty"`
+	Name NightfallDetectorType `json:"name,omitempty"`
 }
