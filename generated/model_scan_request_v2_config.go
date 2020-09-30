@@ -13,5 +13,5 @@ type ScanRequestV2Config struct {
 	// The UUID corresponding to the condition set with which you wish to scan the request payload.
 	ConditionSetUUID string `json:"conditionSetUUID,omitempty"`
 	// A list of conditions with which you wish to scan the request payload.
-	Conditions [][]Condition `json:"conditions,omitempty"`
+	Conditions []Condition `json:"conditions,omitempty"`
 }

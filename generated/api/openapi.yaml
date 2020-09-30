@@ -99,10 +99,6 @@ components:
         location:
           $ref: '#/components/schemas/ScanResponse_location'
       type: object
-    EachConditionArray:
-      items:
-        $ref: '#/components/schemas/Condition'
-      type: array
     Condition:
       description: An inclusion condition within a condition set.
       properties:
@@ -254,7 +250,7 @@ components:
           description: A list of conditions with which you wish to scan the request
             payload.
           items:
-            $ref: '#/components/schemas/EachConditionArray'
+            $ref: '#/components/schemas/Condition'
           type: array
     ScanResponse_confidence:
       properties:
