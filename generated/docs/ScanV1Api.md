@@ -1,16 +1,16 @@
-# \ScanApi
+# \ScanV1Api
 
-All URIs are relative to *https://api.nightfall.ai/v1*
+All URIs are relative to *https://api.nightfall.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ScanPayload**](ScanApi.md#ScanPayload) | **Post** /scan | Scan for sensitive information in your data
+[**ScanPayloadV1**](ScanV1Api.md#ScanPayloadV1) | **Post** /v1/scan | Scan for sensitive information in your data
 
 
 
-## ScanPayload
+## ScanPayloadV1
 
-> [][]ScanResponse ScanPayload(ctx, scanReq)
+> [][]ScanResponse ScanPayloadV1(ctx, scanReqV1)
 
 Scan for sensitive information in your data
 
@@ -22,7 +22,7 @@ Provide a list of arbitrary string data, and scan each item with the provided de
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**scanReq** | [**ScanRequest**](ScanRequest.md)|  | 
+**scanReqV1** | [**ScanRequest**](ScanRequest.md)|  | 
 
 ### Return type
 

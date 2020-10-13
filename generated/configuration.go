@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -82,13 +82,13 @@ type Configuration struct {
 // NewConfiguration returns a new Configuration object
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      "https://api.nightfall.ai/v1",
+		BasePath:      "https://api.nightfall.ai",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "OpenAPI-Generator/1.0.0/go",
 		Debug:         false,
 		Servers:       []ServerConfiguration{
 			{
-				Url: "https://api.nightfall.ai/v1",
+				Url: "https://api.nightfall.ai/",
 				Description: "No description provided",
 			},
 		},

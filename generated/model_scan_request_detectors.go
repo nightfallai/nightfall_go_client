@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -10,6 +10,5 @@
 package openapi
 // ScanRequestDetectors struct for ScanRequestDetectors
 type ScanRequestDetectors struct {
-	// The name of the detector, one of the following enum values.
-	Name string `json:"name,omitempty"`
+	Name NightfallDetectorType `json:"name,omitempty"`
 }

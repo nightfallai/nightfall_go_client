@@ -1,0 +1,878 @@
+openapi: 3.0.1
+info:
+  description: This API exposes detectors for sensitive data in arbitrary string payloads.
+  title: api_platform
+  version: 0.0.1
+servers:
+- url: https://api.nightfall.ai/
+security:
+- apiKeyAuth: []
+paths:
+  /v1/scan:
+    post:
+      description: Provide a list of arbitrary string data, and scan each item with
+        the provided detectors to uncover sensitive information. Returns a list equal
+        in size to the number of provided string payloads. The item at each list index
+        will be a list of all matches for the provided detectors, or an empty list
+        if no occurrences are found.
+      operationId: ScanPayloadV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponseArray'
+          description: Successful operation
+          headers:
+            Content-Type:
+              description: the content type of the response
+              explode: false
+              schema:
+                type: string
+              style: simple
+      security:
+      - apiKeyAuth: []
+      summary: Scan for sensitive information in your data
+      tags:
+      - scanV1
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: '''application/json'''
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:102058955376:function:api_platform_lambda/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      x-codegen-request-body-name: ScanReqV1
+  /v2/scan:
+    post:
+      description: Provide a list of arbitrary string data, and scan each item with
+        the provided detectors to uncover sensitive information. Returns a list equal
+        in size to the number of provided string payloads. The item at each list index
+        will be a list of all matches for the provided detectors, or an empty list
+        if no occurrences are found.
+      operationId: ScanPayloadV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequestV2'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponseV2Array'
+          description: Successful operation
+          headers:
+            Content-Type:
+              description: the content type of the response
+              explode: false
+              schema:
+                type: string
+              style: simple
+      security:
+      - apiKeyAuth: []
+      summary: Scan for sensitive information in your data
+      tags:
+      - scanV2
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: '''application/json'''
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:102058955376:function:api_platform_lambda/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      x-codegen-request-body-name: ScanReqV2
+components:
+  schemas:
+    Empty:
+      type: object
+    ScanRequest:
+      description: The request body of the /v2/scan endpoint
+      example:
+        payload:
+          items:
+          - items
+          - items
+        detectors:
+        - {}
+        - {}
+      properties:
+        detectors:
+          description: A list of detector objects with which you wish to scan the
+            request payload.
+          items:
+            $ref: '#/components/schemas/ScanRequest_detectors'
+          type: array
+        payload:
+          $ref: '#/components/schemas/ScanRequest_payload'
+      type: object
+    ScanRequestV2:
+      description: The request body of the /v2/scan endpoint
+      example:
+        payload:
+        - payload
+        - payload
+        config:
+          conditionSet:
+            conditions:
+            - minNumFindings: 0
+              detector:
+                regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                contextRules:
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  proximity:
+                    windowAfter: 1
+                    windowBefore: 6
+                  confidenceAdjustment: {}
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  proximity:
+                    windowAfter: 1
+                    windowBefore: 6
+                  confidenceAdjustment: {}
+                detectorType: NIGHTFALL_DETECTOR
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                displayName: displayName
+                exclusionRules:
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  wordList:
+                    isCaseSensitive: true
+                    values:
+                    - values
+                    - values
+                  matchType: PARTIAL
+                  exclusionType: REGEX
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  wordList:
+                    isCaseSensitive: true
+                    values:
+                    - values
+                    - values
+                  matchType: PARTIAL
+                  exclusionType: REGEX
+            - minNumFindings: 0
+              detector:
+                regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                contextRules:
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  proximity:
+                    windowAfter: 1
+                    windowBefore: 6
+                  confidenceAdjustment: {}
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  proximity:
+                    windowAfter: 1
+                    windowBefore: 6
+                  confidenceAdjustment: {}
+                detectorType: NIGHTFALL_DETECTOR
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                displayName: displayName
+                exclusionRules:
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  wordList:
+                    isCaseSensitive: true
+                    values:
+                    - values
+                    - values
+                  matchType: PARTIAL
+                  exclusionType: REGEX
+                - regex:
+                    isCaseSensitive: true
+                    pattern: pattern
+                  wordList:
+                    isCaseSensitive: true
+                    values:
+                    - values
+                    - values
+                  matchType: PARTIAL
+                  exclusionType: REGEX
+          conditionSetUUID: conditionSetUUID
+      properties:
+        config:
+          $ref: '#/components/schemas/ScanRequestV2_config'
+        payload:
+          description: The text sample(s) you wish to scan. This data is passed as
+            a string list, so you may choose to segment your text into multiple items
+            for better granularity. The aggregate size of your text (summed across
+            all items in the list) must not exceed 500 KB for any individual request,
+            and the number of items in that list may not exceed 50,000.
+          items:
+            description: A collection of strings to scan.
+            type: string
+          type: array
+      type: object
+    ScanResponseArray:
+      items:
+        $ref: '#/components/schemas/EachItemArray'
+      type: array
+    EachItemArray:
+      items:
+        $ref: '#/components/schemas/ScanResponse'
+      type: array
+    ScanResponse:
+      properties:
+        fragment:
+          description: The text sample that was flagged.
+          type: string
+        detector:
+          description: The data type flagged in the text fragment.
+          type: string
+        confidence:
+          $ref: '#/components/schemas/ScanResponse_confidence'
+        location:
+          $ref: '#/components/schemas/ScanResponse_location'
+      type: object
+    ScanResponseV2Array:
+      items:
+        $ref: '#/components/schemas/EachItemV2Array'
+      type: array
+    EachItemV2Array:
+      items:
+        $ref: '#/components/schemas/ScanResponseV2'
+      type: array
+    ScanResponseV2:
+      properties:
+        fragment:
+          description: The text sample that was flagged.
+          type: string
+        detectorName:
+          description: The data type flagged in the text fragment.
+          type: string
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+        location:
+          $ref: '#/components/schemas/ScanResponse_location'
+      type: object
+    Condition:
+      description: An inclusion condition within a condition set.
+      example:
+        minNumFindings: 0
+        detector:
+          regex:
+            isCaseSensitive: true
+            pattern: pattern
+          contextRules:
+          - regex:
+              isCaseSensitive: true
+              pattern: pattern
+            proximity:
+              windowAfter: 1
+              windowBefore: 6
+            confidenceAdjustment: {}
+          - regex:
+              isCaseSensitive: true
+              pattern: pattern
+            proximity:
+              windowAfter: 1
+              windowBefore: 6
+            confidenceAdjustment: {}
+          detectorType: NIGHTFALL_DETECTOR
+          wordList:
+            isCaseSensitive: true
+            values:
+            - values
+            - values
+          displayName: displayName
+          exclusionRules:
+          - regex:
+              isCaseSensitive: true
+              pattern: pattern
+            wordList:
+              isCaseSensitive: true
+              values:
+              - values
+              - values
+            matchType: PARTIAL
+            exclusionType: REGEX
+          - regex:
+              isCaseSensitive: true
+              pattern: pattern
+            wordList:
+              isCaseSensitive: true
+              values:
+              - values
+              - values
+            matchType: PARTIAL
+            exclusionType: REGEX
+      properties:
+        minNumFindings:
+          description: The minimum number of findings required in order for this detector
+            to be reported.
+          type: integer
+        minConfidence:
+          $ref: '#/components/schemas/Confidence'
+        detector:
+          $ref: '#/components/schemas/Detector'
+      type: object
+    Detector:
+      example:
+        regex:
+          isCaseSensitive: true
+          pattern: pattern
+        contextRules:
+        - regex:
+            isCaseSensitive: true
+            pattern: pattern
+          proximity:
+            windowAfter: 1
+            windowBefore: 6
+          confidenceAdjustment: {}
+        - regex:
+            isCaseSensitive: true
+            pattern: pattern
+          proximity:
+            windowAfter: 1
+            windowBefore: 6
+          confidenceAdjustment: {}
+        detectorType: NIGHTFALL_DETECTOR
+        wordList:
+          isCaseSensitive: true
+          values:
+          - values
+          - values
+        displayName: displayName
+        exclusionRules:
+        - regex:
+            isCaseSensitive: true
+            pattern: pattern
+          wordList:
+            isCaseSensitive: true
+            values:
+            - values
+            - values
+          matchType: PARTIAL
+          exclusionType: REGEX
+        - regex:
+            isCaseSensitive: true
+            pattern: pattern
+          wordList:
+            isCaseSensitive: true
+            values:
+            - values
+            - values
+          matchType: PARTIAL
+          exclusionType: REGEX
+      properties:
+        displayName:
+          description: The display name for this detector's findings in the response.
+          type: string
+        detectorType:
+          description: The type of detector.
+          enum:
+          - NIGHTFALL_DETECTOR
+          - REGEX
+          - WORD_LIST
+          type: string
+        nightfallDetector:
+          $ref: '#/components/schemas/NightfallDetectorType'
+        regex:
+          $ref: '#/components/schemas/Regex'
+        wordList:
+          $ref: '#/components/schemas/WordList'
+        contextRules:
+          description: A list of context rules.
+          items:
+            $ref: '#/components/schemas/ContextRule'
+          type: array
+        exclusionRules:
+          description: A list of exclusion rules.
+          items:
+            $ref: '#/components/schemas/ExclusionRule'
+          type: array
+      type: object
+    ContextRule:
+      description: A context rule adjusts the finding confidence based on surrounding
+        context.
+      example:
+        regex:
+          isCaseSensitive: true
+          pattern: pattern
+        proximity:
+          windowAfter: 1
+          windowBefore: 6
+        confidenceAdjustment: {}
+      properties:
+        regex:
+          $ref: '#/components/schemas/Regex'
+        proximity:
+          $ref: '#/components/schemas/ContextRule_proximity'
+        confidenceAdjustment:
+          $ref: '#/components/schemas/ContextRule_confidenceAdjustment'
+      type: object
+    ExclusionRule:
+      description: An exclusion rule removes findings that match the rule's given
+        exlusion.
+      example:
+        regex:
+          isCaseSensitive: true
+          pattern: pattern
+        wordList:
+          isCaseSensitive: true
+          values:
+          - values
+          - values
+        matchType: PARTIAL
+        exclusionType: REGEX
+      properties:
+        matchType:
+          description: The match type of exclusion rule.
+          enum:
+          - PARTIAL
+          - FULL
+          type: string
+        exclusionType:
+          description: The type of exclusion rule.
+          enum:
+          - REGEX
+          - WORD_LIST
+          type: string
+        regex:
+          $ref: '#/components/schemas/Regex'
+        wordList:
+          $ref: '#/components/schemas/WordList'
+      type: object
+    Regex:
+      description: The regex object for the regex detector, context rules, and exclusion
+        rules.
+      example:
+        isCaseSensitive: true
+        pattern: pattern
+      properties:
+        pattern:
+          description: The regex pattern to match on.
+          type: string
+        isCaseSensitive:
+          description: The case sensitivity for the regex pattern.
+          type: boolean
+      type: object
+    WordList:
+      description: The WordList object for wordList detector and exclusion rules.
+      example:
+        isCaseSensitive: true
+        values:
+        - values
+        - values
+      properties:
+        values:
+          description: A list of words for wordList.
+          items:
+            type: string
+          type: array
+        isCaseSensitive:
+          description: The case sensitivity for words in the wordList. If false, ignore
+            the case of findings.
+          type: boolean
+      type: object
+    NightfallDetectorType:
+      description: The name for a Nightfall detector.
+      enum:
+      - API_KEY
+      - RANDOMLY_GENERATED_TOKEN
+      - CRYPTOGRAPHIC_TOKEN
+      - CREDIT_CARD_NUMBER
+      - US_SOCIAL_SECURITY_NUMBER
+      - AMERICAN_BANKERS_CUSIP_ID
+      - US_BANK_ROUTING_MICR
+      - ICD9_CODE
+      - ICD10_CODE
+      - US_DRIVERS_LICENSE_NUMBER
+      - US_PASSPORT
+      - PHONE_NUMBER
+      - IP_ADDRESS
+      - EMAIL_ADDRESS
+      type: string
+    Confidence:
+      description: The confidence level of a finding.
+      enum:
+      - VERY_UNLIKELY
+      - UNLIKELY
+      - POSSIBLE
+      - LIKELY
+      - VERY_LIKELY
+      type: string
+    ScanRequest_detectors:
+      example: {}
+      properties:
+        name:
+          $ref: '#/components/schemas/NightfallDetectorType'
+    ScanRequest_payload:
+      description: The text sample(s) you wish to scan. This data is passed as a string
+        list, so you may choose to segment your text into multiple items for better
+        granularity. The aggregate size of your text (summed across all items in the
+        list) must not exceed 500 KB for any individual request, and the number of
+        items in that list may not exceed 50,000.
+      example:
+        items:
+        - items
+        - items
+      properties:
+        items:
+          description: A collection of strings to scan.
+          items:
+            type: string
+          type: array
+    ScanRequestV2_config_conditionSet:
+      description: A conditionSet contains a list of conditions with which you wish
+        to scan the request payload.
+      example:
+        conditions:
+        - minNumFindings: 0
+          detector:
+            regex:
+              isCaseSensitive: true
+              pattern: pattern
+            contextRules:
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              proximity:
+                windowAfter: 1
+                windowBefore: 6
+              confidenceAdjustment: {}
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              proximity:
+                windowAfter: 1
+                windowBefore: 6
+              confidenceAdjustment: {}
+            detectorType: NIGHTFALL_DETECTOR
+            wordList:
+              isCaseSensitive: true
+              values:
+              - values
+              - values
+            displayName: displayName
+            exclusionRules:
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              matchType: PARTIAL
+              exclusionType: REGEX
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              matchType: PARTIAL
+              exclusionType: REGEX
+        - minNumFindings: 0
+          detector:
+            regex:
+              isCaseSensitive: true
+              pattern: pattern
+            contextRules:
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              proximity:
+                windowAfter: 1
+                windowBefore: 6
+              confidenceAdjustment: {}
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              proximity:
+                windowAfter: 1
+                windowBefore: 6
+              confidenceAdjustment: {}
+            detectorType: NIGHTFALL_DETECTOR
+            wordList:
+              isCaseSensitive: true
+              values:
+              - values
+              - values
+            displayName: displayName
+            exclusionRules:
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              matchType: PARTIAL
+              exclusionType: REGEX
+            - regex:
+                isCaseSensitive: true
+                pattern: pattern
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              matchType: PARTIAL
+              exclusionType: REGEX
+      properties:
+        conditions:
+          description: A list of conditions.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+    ScanRequestV2_config:
+      description: Config can contain either a conditionSetUUID or a list of inline
+        conditions to scan the request payload with.
+      example:
+        conditionSet:
+          conditions:
+          - minNumFindings: 0
+            detector:
+              regex:
+                isCaseSensitive: true
+                pattern: pattern
+              contextRules:
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                proximity:
+                  windowAfter: 1
+                  windowBefore: 6
+                confidenceAdjustment: {}
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                proximity:
+                  windowAfter: 1
+                  windowBefore: 6
+                confidenceAdjustment: {}
+              detectorType: NIGHTFALL_DETECTOR
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              displayName: displayName
+              exclusionRules:
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                matchType: PARTIAL
+                exclusionType: REGEX
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                matchType: PARTIAL
+                exclusionType: REGEX
+          - minNumFindings: 0
+            detector:
+              regex:
+                isCaseSensitive: true
+                pattern: pattern
+              contextRules:
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                proximity:
+                  windowAfter: 1
+                  windowBefore: 6
+                confidenceAdjustment: {}
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                proximity:
+                  windowAfter: 1
+                  windowBefore: 6
+                confidenceAdjustment: {}
+              detectorType: NIGHTFALL_DETECTOR
+              wordList:
+                isCaseSensitive: true
+                values:
+                - values
+                - values
+              displayName: displayName
+              exclusionRules:
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                matchType: PARTIAL
+                exclusionType: REGEX
+              - regex:
+                  isCaseSensitive: true
+                  pattern: pattern
+                wordList:
+                  isCaseSensitive: true
+                  values:
+                  - values
+                  - values
+                matchType: PARTIAL
+                exclusionType: REGEX
+        conditionSetUUID: conditionSetUUID
+      properties:
+        conditionSetUUID:
+          description: The UUID corresponding to the condition set with which you
+            wish to scan the request payload.
+          type: string
+        conditionSet:
+          $ref: '#/components/schemas/ScanRequestV2_config_conditionSet'
+    ScanResponse_confidence:
+      properties:
+        bucket:
+          $ref: '#/components/schemas/Confidence'
+    ScanResponse_location_byteRange:
+      properties:
+        start:
+          description: The index of the fragment's starting byte.
+          type: integer
+        end:
+          description: The index of the fragment's ending byte.
+          type: integer
+    ScanResponse_location_unicodeRange:
+      properties:
+        start:
+          description: The index of the fragment's starting unicode character.
+          type: integer
+        end:
+          description: The index of the fragment's ending unicode character.
+          type: integer
+    ScanResponse_location:
+      properties:
+        byteRange:
+          $ref: '#/components/schemas/ScanResponse_location_byteRange'
+        unicodeRange:
+          $ref: '#/components/schemas/ScanResponse_location_unicodeRange'
+    ContextRule_proximity:
+      description: The object containing the length of characters before and after
+        finding to evaluate context.
+      example:
+        windowAfter: 1
+        windowBefore: 6
+      properties:
+        windowBefore:
+          description: The number of leading characters to include as context before
+            the finding itself.
+          type: integer
+        windowAfter:
+          description: The number of trailing characters to include as context after
+            the finding itself.
+          type: integer
+    ContextRule_confidenceAdjustment:
+      description: The object containing the confidence level to adjust findings to.
+      example: {}
+      properties:
+        fixedConfidence:
+          $ref: '#/components/schemas/Confidence'
+  securitySchemes:
+    apiKeyAuth:
+      in: header
+      name: x-api-key
+      type: apiKey
+x-amazon-apigateway-documentation:
+  version: v2.1
+  createdDate: 2016-11-17T07:03:59.000Z
+  documentationParts:
+  - location:
+      type: API
+    properties:
+      info:
+        description: This API exposes detectors for sensitive data in arbitrary string
+          payloads.
+  - location:
+      type: METHOD
+      path: /v1/scan
+      method: POST
+    properties:
+      tags:
+      - scanV1
+      summary: Verify whether the given string matches any of the sensitive data types
+  - location:
+      type: REQUEST_BODY
+      path: /v1/scan
+      method: POST
+    properties:
+      description: Object containing the string payload to scan, as well as the sensitive
+        data types to verify against.
+  - location:
+      type: METHOD
+      path: /v2/scan
+      method: POST
+    properties:
+      tags:
+      - scanV2
+      summary: Verify whether the given string matches any of the sensitive data types
+  - location:
+      type: REQUEST_BODY
+      path: /v2/scan
+      method: POST
+    properties:
+      description: Object containing the string payload to scan, as well as the sensitive
+        data types to verify against.
+  - location:
+      type: RESPONSE
+      method: '*'
+      statusCode: "200"
+    properties:
+      description: Successful operation
+x-amazon-apigateway-gateway-responses:
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: 404
+    responseTemplates:
+      application/json: |-
+        {
+             "message": "resource not found",
+             "path": "$context.path",
+             "httpMethod": "$context.httpMethod",
+             "statusCode": 404
+        }

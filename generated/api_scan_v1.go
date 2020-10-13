@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -21,17 +21,17 @@ var (
 	_ _context.Context
 )
 
-// ScanApiService ScanApi service
-type ScanApiService service
+// ScanV1ApiService ScanV1Api service
+type ScanV1ApiService service
 
 /*
-ScanPayload Scan for sensitive information in your data
+ScanPayloadV1 Scan for sensitive information in your data
 Provide a list of arbitrary string data, and scan each item with the provided detectors to uncover sensitive information. Returns a list equal in size to the number of provided string payloads. The item at each list index will be a list of all matches for the provided detectors, or an empty list if no occurrences are found.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param scanReq
+ * @param scanReqV1
 @return [][]ScanResponse
 */
-func (a *ScanApiService) ScanPayload(ctx _context.Context, scanReq ScanRequest) ([][]ScanResponse, *_nethttp.Response, error) {
+func (a *ScanV1ApiService) ScanPayloadV1(ctx _context.Context, scanReqV1 ScanRequest) ([][]ScanResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
@@ -42,7 +42,7 @@ func (a *ScanApiService) ScanPayload(ctx _context.Context, scanReq ScanRequest) 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/scan"
+	localVarPath := a.client.cfg.BasePath + "/v1/scan"
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -65,7 +65,7 @@ func (a *ScanApiService) ScanPayload(ctx _context.Context, scanReq ScanRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = &scanReq
+	localVarPostBody = &scanReqV1
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
