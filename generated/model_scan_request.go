@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -8,7 +8,7 @@
  */
 
 package openapi
-// ScanRequest The request body of the /scan endpoint
+// ScanRequest The request body of the /v2/scan endpoint
 type ScanRequest struct {
 	// A list of detector objects with which you wish to scan the request payload.
 	Detectors []ScanRequestDetectors `json:"detectors,omitempty"`

@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -40,7 +40,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Methods API v0.0.1
+// APIClient manages communication with the api_platform API v0.0.1
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -48,7 +48,9 @@ type APIClient struct {
 
 	// API Services
 
-	ScanApi *ScanApiService
+	ScanV1Api *ScanV1ApiService
+
+	ScanV2Api *ScanV2ApiService
 }
 
 type service struct {
@@ -67,7 +69,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.ScanApi = (*ScanApiService)(&c.common)
+	c.ScanV1Api = (*ScanV1ApiService)(&c.common)
+	c.ScanV2Api = (*ScanV2ApiService)(&c.common)
 
 	return c
 }

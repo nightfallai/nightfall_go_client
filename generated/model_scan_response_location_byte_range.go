@@ -1,5 +1,5 @@
 /*
- * Methods
+ * api_platform
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -10,8 +10,8 @@
 package openapi
 // ScanResponseLocationByteRange struct for ScanResponseLocationByteRange
 type ScanResponseLocationByteRange struct {
-	// the index of the fragment's starting byte
+	// The index of the fragment's starting byte.
 	Start int32 `json:"start,omitempty"`
-	// the index of the fragment's ending byte
+	// The index of the fragment's ending byte.
 	End int32 `json:"end,omitempty"`
 }

@@ -8,7 +8,7 @@
  */
 
 package openapi
-// ScanResponseConfidence struct for ScanResponseConfidence
-type ScanResponseConfidence struct {
-	Bucket Confidence `json:"bucket,omitempty"`
+// ContextRuleConfidenceAdjustment The object containing the confidence level to adjust findings to.
+type ContextRuleConfidenceAdjustment struct {
+	FixedConfidence Confidence `json:"fixedConfidence,omitempty"`
 }
