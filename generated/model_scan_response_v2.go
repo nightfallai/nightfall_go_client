@@ -1,5 +1,5 @@
 /*
- * api_platform
+ * Methods
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -15,5 +15,5 @@ type ScanResponseV2 struct {
 	// The data type flagged in the text fragment.
 	DetectorName string `json:"detectorName,omitempty"`
 	Confidence Confidence `json:"confidence,omitempty"`
-	Location ScanResponseLocation `json:"location,omitempty"`
+	Location ScanResponseV2Location `json:"location,omitempty"`
 }

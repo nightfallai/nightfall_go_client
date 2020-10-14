@@ -1,5 +1,5 @@
 /*
- * api_platform
+ * Methods
  *
  * This API exposes detectors for sensitive data in arbitrary string payloads.
  *
@@ -8,8 +8,8 @@
  */
 
 package openapi
-// ScanResponseLocationUnicodeRange struct for ScanResponseLocationUnicodeRange
-type ScanResponseLocationUnicodeRange struct {
+// ScanResponseV2LocationUnicodeRange struct for ScanResponseV2LocationUnicodeRange
+type ScanResponseV2LocationUnicodeRange struct {
 	// The index of the fragment's starting unicode character.
 	Start int32 `json:"start,omitempty"`
 	// The index of the fragment's ending unicode character.

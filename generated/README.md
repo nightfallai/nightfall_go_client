@@ -32,7 +32,6 @@ All URIs are relative to *https://api.nightfall.ai*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ScanV1Api* | [**ScanPayloadV1**](docs/ScanV1Api.md#scanpayloadv1) | **Post** /v1/scan | Scan for sensitive information in your data
 *ScanV2Api* | [**ScanPayloadV2**](docs/ScanV2Api.md#scanpayloadv2) | **Post** /v2/scan | Scan for sensitive information in your data
 
 
@@ -47,18 +46,13 @@ Class | Method | HTTP request | Description
  - [ExclusionRule](docs/ExclusionRule.md)
  - [NightfallDetectorType](docs/NightfallDetectorType.md)
  - [Regex](docs/Regex.md)
- - [ScanRequest](docs/ScanRequest.md)
- - [ScanRequestDetectors](docs/ScanRequestDetectors.md)
- - [ScanRequestPayload](docs/ScanRequestPayload.md)
  - [ScanRequestV2](docs/ScanRequestV2.md)
  - [ScanRequestV2Config](docs/ScanRequestV2Config.md)
  - [ScanRequestV2ConfigConditionSet](docs/ScanRequestV2ConfigConditionSet.md)
- - [ScanResponse](docs/ScanResponse.md)
- - [ScanResponseConfidence](docs/ScanResponseConfidence.md)
- - [ScanResponseLocation](docs/ScanResponseLocation.md)
- - [ScanResponseLocationByteRange](docs/ScanResponseLocationByteRange.md)
- - [ScanResponseLocationUnicodeRange](docs/ScanResponseLocationUnicodeRange.md)
  - [ScanResponseV2](docs/ScanResponseV2.md)
+ - [ScanResponseV2Location](docs/ScanResponseV2Location.md)
+ - [ScanResponseV2LocationByteRange](docs/ScanResponseV2LocationByteRange.md)
+ - [ScanResponseV2LocationUnicodeRange](docs/ScanResponseV2LocationUnicodeRange.md)
  - [WordList](docs/WordList.md)
 
 
