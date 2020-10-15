@@ -13,9 +13,9 @@ type Confidence string
 
 // List of Confidence
 const (
-	VERY_UNLIKELY Confidence = "VERY_UNLIKELY"
-	UNLIKELY Confidence = "UNLIKELY"
-	POSSIBLE Confidence = "POSSIBLE"
-	LIKELY Confidence = "LIKELY"
-	VERY_LIKELY Confidence = "VERY_LIKELY"
+	CONFIDENCE_VERY_UNLIKELY Confidence = "VERY_UNLIKELY"
+	CONFIDENCE_UNLIKELY Confidence = "UNLIKELY"
+	CONFIDENCE_POSSIBLE Confidence = "POSSIBLE"
+	CONFIDENCE_LIKELY Confidence = "LIKELY"
+	CONFIDENCE_VERY_LIKELY Confidence = "VERY_LIKELY"
 )

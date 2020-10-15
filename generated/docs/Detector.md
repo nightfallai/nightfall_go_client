@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DisplayName** | **string** | The display name for this detector&#39;s findings in the response. | [optional] 
-**DetectorType** | **string** | The type of detector. | [optional] 
+**DetectorType** | [**DetectorType**](DetectorType.md) |  | [optional] 
 **NightfallDetector** | [**NightfallDetectorType**](NightfallDetectorType.md) |  | [optional] 
 **Regex** | [**Regex**](Regex.md) |  | [optional] 
 **WordList** | [**WordList**](WordList.md) |  | [optional] 
