@@ -12,8 +12,7 @@ package openapi
 type Detector struct {
 	// The display name for this detector's findings in the response.
 	DisplayName string `json:"displayName,omitempty"`
-	// The type of detector.
-	DetectorType string `json:"detectorType,omitempty"`
+	DetectorType DetectorType `json:"detectorType,omitempty"`
 	NightfallDetector NightfallDetectorType `json:"nightfallDetector,omitempty"`
 	Regex Regex `json:"regex,omitempty"`
 	WordList WordList `json:"wordList,omitempty"`

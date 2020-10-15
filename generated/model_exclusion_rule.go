@@ -10,10 +10,8 @@
 package openapi
 // ExclusionRule An exclusion rule removes findings that match the rule's given exlusion.
 type ExclusionRule struct {
-	// The match type of exclusion rule.
-	MatchType string `json:"matchType,omitempty"`
-	// The type of exclusion rule.
-	ExclusionType string `json:"exclusionType,omitempty"`
+	MatchType MatchType `json:"matchType,omitempty"`
+	ExclusionType ExclusionType `json:"exclusionType,omitempty"`
 	Regex Regex `json:"regex,omitempty"`
 	WordList WordList `json:"wordList,omitempty"`
 }

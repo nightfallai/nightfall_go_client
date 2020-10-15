@@ -149,7 +149,6 @@ components:
                     windowAfter: 1
                     windowBefore: 6
                   confidenceAdjustment: {}
-                detectorType: NIGHTFALL_DETECTOR
                 wordList:
                   isCaseSensitive: true
                   values:
@@ -165,8 +164,6 @@ components:
                     values:
                     - values
                     - values
-                  matchType: PARTIAL
-                  exclusionType: REGEX
                 - regex:
                     isCaseSensitive: true
                     pattern: pattern
@@ -175,8 +172,6 @@ components:
                     values:
                     - values
                     - values
-                  matchType: PARTIAL
-                  exclusionType: REGEX
             - minNumFindings: 0
               detector:
                 regex:
@@ -197,7 +192,6 @@ components:
                     windowAfter: 1
                     windowBefore: 6
                   confidenceAdjustment: {}
-                detectorType: NIGHTFALL_DETECTOR
                 wordList:
                   isCaseSensitive: true
                   values:
@@ -213,8 +207,6 @@ components:
                     values:
                     - values
                     - values
-                  matchType: PARTIAL
-                  exclusionType: REGEX
                 - regex:
                     isCaseSensitive: true
                     pattern: pattern
@@ -223,8 +215,6 @@ components:
                     values:
                     - values
                     - values
-                  matchType: PARTIAL
-                  exclusionType: REGEX
           conditionSetUUID: conditionSetUUID
       properties:
         config:
@@ -305,7 +295,6 @@ components:
               windowAfter: 1
               windowBefore: 6
             confidenceAdjustment: {}
-          detectorType: NIGHTFALL_DETECTOR
           wordList:
             isCaseSensitive: true
             values:
@@ -321,8 +310,6 @@ components:
               values:
               - values
               - values
-            matchType: PARTIAL
-            exclusionType: REGEX
           - regex:
               isCaseSensitive: true
               pattern: pattern
@@ -331,8 +318,6 @@ components:
               values:
               - values
               - values
-            matchType: PARTIAL
-            exclusionType: REGEX
       properties:
         minNumFindings:
           description: The minimum number of findings required in order for this detector
@@ -363,7 +348,6 @@ components:
             windowAfter: 1
             windowBefore: 6
           confidenceAdjustment: {}
-        detectorType: NIGHTFALL_DETECTOR
         wordList:
           isCaseSensitive: true
           values:
@@ -379,8 +363,6 @@ components:
             values:
             - values
             - values
-          matchType: PARTIAL
-          exclusionType: REGEX
         - regex:
             isCaseSensitive: true
             pattern: pattern
@@ -389,19 +371,12 @@ components:
             values:
             - values
             - values
-          matchType: PARTIAL
-          exclusionType: REGEX
       properties:
         displayName:
           description: The display name for this detector's findings in the response.
           type: string
         detectorType:
-          description: The type of detector.
-          enum:
-          - NIGHTFALL_DETECTOR
-          - REGEX
-          - WORD_LIST
-          type: string
+          $ref: '#/components/schemas/DetectorType'
         nightfallDetector:
           $ref: '#/components/schemas/NightfallDetectorType'
         regex:
@@ -450,21 +425,11 @@ components:
           values:
           - values
           - values
-        matchType: PARTIAL
-        exclusionType: REGEX
       properties:
         matchType:
-          description: The match type of exclusion rule.
-          enum:
-          - PARTIAL
-          - FULL
-          type: string
+          $ref: '#/components/schemas/MatchType'
         exclusionType:
-          description: The type of exclusion rule.
-          enum:
-          - REGEX
-          - WORD_LIST
-          type: string
+          $ref: '#/components/schemas/ExclusionType'
         regex:
           $ref: '#/components/schemas/Regex'
         wordList:
@@ -529,6 +494,25 @@ components:
       - LIKELY
       - VERY_LIKELY
       type: string
+    DetectorType:
+      description: The type of detector.
+      enum:
+      - NIGHTFALL_DETECTOR
+      - REGEX
+      - WORD_LIST
+      type: string
+    MatchType:
+      description: The type of match for a pattern.
+      enum:
+      - PARTIAL
+      - FULL
+      type: string
+    ExclusionType:
+      description: The type of exclusion rule.
+      enum:
+      - REGEX
+      - WORD_LIST
+      type: string
     ScanRequest_detectors:
       example: {}
       properties:
@@ -575,7 +559,6 @@ components:
                 windowAfter: 1
                 windowBefore: 6
               confidenceAdjustment: {}
-            detectorType: NIGHTFALL_DETECTOR
             wordList:
               isCaseSensitive: true
               values:
@@ -591,8 +574,6 @@ components:
                 values:
                 - values
                 - values
-              matchType: PARTIAL
-              exclusionType: REGEX
             - regex:
                 isCaseSensitive: true
                 pattern: pattern
@@ -601,8 +582,6 @@ components:
                 values:
                 - values
                 - values
-              matchType: PARTIAL
-              exclusionType: REGEX
         - minNumFindings: 0
           detector:
             regex:
@@ -623,7 +602,6 @@ components:
                 windowAfter: 1
                 windowBefore: 6
               confidenceAdjustment: {}
-            detectorType: NIGHTFALL_DETECTOR
             wordList:
               isCaseSensitive: true
               values:
@@ -639,8 +617,6 @@ components:
                 values:
                 - values
                 - values
-              matchType: PARTIAL
-              exclusionType: REGEX
             - regex:
                 isCaseSensitive: true
                 pattern: pattern
@@ -649,8 +625,6 @@ components:
                 values:
                 - values
                 - values
-              matchType: PARTIAL
-              exclusionType: REGEX
       properties:
         conditions:
           description: A list of conditions.
@@ -683,7 +657,6 @@ components:
                   windowAfter: 1
                   windowBefore: 6
                 confidenceAdjustment: {}
-              detectorType: NIGHTFALL_DETECTOR
               wordList:
                 isCaseSensitive: true
                 values:
@@ -699,8 +672,6 @@ components:
                   values:
                   - values
                   - values
-                matchType: PARTIAL
-                exclusionType: REGEX
               - regex:
                   isCaseSensitive: true
                   pattern: pattern
@@ -709,8 +680,6 @@ components:
                   values:
                   - values
                   - values
-                matchType: PARTIAL
-                exclusionType: REGEX
           - minNumFindings: 0
             detector:
               regex:
@@ -731,7 +700,6 @@ components:
                   windowAfter: 1
                   windowBefore: 6
                 confidenceAdjustment: {}
-              detectorType: NIGHTFALL_DETECTOR
               wordList:
                 isCaseSensitive: true
                 values:
@@ -747,8 +715,6 @@ components:
                   values:
                   - values
                   - values
-                matchType: PARTIAL
-                exclusionType: REGEX
               - regex:
                   isCaseSensitive: true
                   pattern: pattern
@@ -757,8 +723,6 @@ components:
                   values:
                   - values
                   - values
-                matchType: PARTIAL
-                exclusionType: REGEX
         conditionSetUUID: conditionSetUUID
       properties:
         conditionSetUUID:
