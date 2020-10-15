@@ -1,11 +1,11 @@
-# ScanResponseV2Location
+# ScanResponseLocationUnicodeRange
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ByteRange** | [**ScanResponseV2LocationByteRange**](ScanResponseV2_location_byteRange.md) |  | [optional] 
-**UnicodeRange** | [**ScanResponseV2LocationUnicodeRange**](ScanResponseV2_location_unicodeRange.md) |  | [optional] 
+**Start** | **int32** | The index of the fragment&#39;s starting unicode character. | [optional] 
+**End** | **int32** | The index of the fragment&#39;s ending unicode character. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

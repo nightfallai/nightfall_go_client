@@ -8,12 +8,12 @@
  */
 
 package openapi
-// ScanResponseV2 struct for ScanResponseV2
-type ScanResponseV2 struct {
+// ScanResponse struct for ScanResponse
+type ScanResponse struct {
 	// The text sample that was flagged.
 	Fragment string `json:"fragment,omitempty"`
 	// The data type flagged in the text fragment.
-	DetectorName string `json:"detectorName,omitempty"`
-	Confidence Confidence `json:"confidence,omitempty"`
+	Detector string `json:"detector,omitempty"`
+	Confidence ScanResponseConfidence `json:"confidence,omitempty"`
 	Location ScanResponseLocation `json:"location,omitempty"`
 }

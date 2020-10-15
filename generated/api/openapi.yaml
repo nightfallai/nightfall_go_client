@@ -8,6 +8,50 @@ servers:
 security:
 - apiKeyAuth: []
 paths:
+  /v1/scan:
+    post:
+      description: Provide a list of arbitrary string data, and scan each item with
+        the provided detectors to uncover sensitive information. Returns a list equal
+        in size to the number of provided string payloads. The item at each list index
+        will be a list of all matches for the provided detectors, or an empty list
+        if no occurrences are found.
+      operationId: ScanPayloadV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponseArray'
+          description: Successful operation
+          headers:
+            Content-Type:
+              description: the content type of the response
+              explode: false
+              schema:
+                type: string
+              style: simple
+      security:
+      - apiKeyAuth: []
+      summary: Scan for sensitive information in your data
+      tags:
+      - scanV1
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: '''application/json'''
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:679663525012:function:api_platform_lambda/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      x-codegen-request-body-name: ScanReqV1
   /v2/scan:
     post:
       description: Provide a list of arbitrary string data, and scan each item with
@@ -55,6 +99,26 @@ paths:
 components:
   schemas:
     Empty:
+      type: object
+    ScanRequest:
+      description: The request body of the /v1/scan endpoint
+      example:
+        payload:
+          items:
+          - items
+          - items
+        detectors:
+        - {}
+        - {}
+      properties:
+        detectors:
+          description: A list of detector objects with which you wish to scan the
+            request payload.
+          items:
+            $ref: '#/components/schemas/ScanRequest_detectors'
+          type: array
+        payload:
+          $ref: '#/components/schemas/ScanRequest_payload'
       type: object
     ScanRequestV2:
       description: The request body of the /v2/scan endpoint
@@ -176,6 +240,27 @@ components:
             type: string
           type: array
       type: object
+    ScanResponseArray:
+      items:
+        $ref: '#/components/schemas/EachItemArray'
+      type: array
+    EachItemArray:
+      items:
+        $ref: '#/components/schemas/ScanResponse'
+      type: array
+    ScanResponse:
+      properties:
+        fragment:
+          description: The text sample that was flagged.
+          type: string
+        detector:
+          description: The data type flagged in the text fragment.
+          type: string
+        confidence:
+          $ref: '#/components/schemas/ScanResponse_confidence'
+        location:
+          $ref: '#/components/schemas/ScanResponse_location'
+      type: object
     ScanResponseV2Array:
       items:
         $ref: '#/components/schemas/EachItemV2Array'
@@ -195,7 +280,7 @@ components:
         confidence:
           $ref: '#/components/schemas/Confidence'
         location:
-          $ref: '#/components/schemas/ScanResponseV2_location'
+          $ref: '#/components/schemas/ScanResponse_location'
       type: object
     Condition:
       description: An inclusion condition within a condition set.
@@ -422,7 +507,7 @@ components:
       enum:
       - API_KEY
       - RANDOMLY_GENERATED_TOKEN
-      - CRYPTOGRAPHIC_TOKEN
+      - CRYPTOGRAPHIC_KEY
       - CREDIT_CARD_NUMBER
       - US_SOCIAL_SECURITY_NUMBER
       - AMERICAN_BANKERS_CUSIP_ID
@@ -444,6 +529,27 @@ components:
       - LIKELY
       - VERY_LIKELY
       type: string
+    ScanRequest_detectors:
+      example: {}
+      properties:
+        name:
+          $ref: '#/components/schemas/NightfallDetectorType'
+    ScanRequest_payload:
+      description: The text sample(s) you wish to scan. This data is passed as a string
+        list, so you may choose to segment your text into multiple items for better
+        granularity. The aggregate size of your text (summed across all items in the
+        list) must not exceed 500 KB for any individual request, and the number of
+        items in that list may not exceed 50,000.
+      example:
+        items:
+        - items
+        - items
+      properties:
+        items:
+          description: A collection of strings to scan.
+          items:
+            type: string
+          type: array
     ScanRequestV2_config_conditionSet:
       description: A conditionSet contains a list of conditions with which you wish
         to scan the request payload.
@@ -661,7 +767,11 @@ components:
           type: string
         conditionSet:
           $ref: '#/components/schemas/ScanRequestV2_config_conditionSet'
-    ScanResponseV2_location_byteRange:
+    ScanResponse_confidence:
+      properties:
+        bucket:
+          $ref: '#/components/schemas/Confidence'
+    ScanResponse_location_byteRange:
       properties:
         start:
           description: The index of the fragment's starting byte.
@@ -669,7 +779,7 @@ components:
         end:
           description: The index of the fragment's ending byte.
           type: integer
-    ScanResponseV2_location_unicodeRange:
+    ScanResponse_location_unicodeRange:
       properties:
         start:
           description: The index of the fragment's starting unicode character.
@@ -677,12 +787,12 @@ components:
         end:
           description: The index of the fragment's ending unicode character.
           type: integer
-    ScanResponseV2_location:
+    ScanResponse_location:
       properties:
         byteRange:
-          $ref: '#/components/schemas/ScanResponseV2_location_byteRange'
+          $ref: '#/components/schemas/ScanResponse_location_byteRange'
         unicodeRange:
-          $ref: '#/components/schemas/ScanResponseV2_location_unicodeRange'
+          $ref: '#/components/schemas/ScanResponse_location_unicodeRange'
     ContextRule_proximity:
       description: The object containing the length of characters before and after
         finding to evaluate context.
@@ -719,6 +829,21 @@ x-amazon-apigateway-documentation:
       info:
         description: This API exposes detectors for sensitive data in arbitrary string
           payloads.
+  - location:
+      type: METHOD
+      path: /v1/scan
+      method: POST
+    properties:
+      tags:
+      - scanV1
+      summary: Verify whether the given string matches any of the sensitive data types
+  - location:
+      type: REQUEST_BODY
+      path: /v1/scan
+      method: POST
+    properties:
+      description: Object containing the string payload to scan, as well as the sensitive
+        data types to verify against.
   - location:
       type: METHOD
       path: /v2/scan
