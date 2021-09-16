@@ -47,7 +47,7 @@ paths:
             statusCode: "200"
             responseParameters:
               method.response.header.Content-Type: '''application/json'''
-        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:053737762392:function:api_platform_lambda/invocations
+        uri: arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:679663525012:function:api_platform_lambda/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
