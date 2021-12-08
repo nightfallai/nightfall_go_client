@@ -27,7 +27,8 @@ const (
 	CONFIDENCE_VERY_LIKELY Confidence = "VERY_LIKELY"
 )
 
-var allowedConfidenceEnumValues = []Confidence{
+// All allowed values of Confidence enum
+var AllowedConfidenceEnumValues = []Confidence{
 	"VERY_UNLIKELY",
 	"UNLIKELY",
 	"POSSIBLE",
@@ -42,7 +43,7 @@ func (v *Confidence) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := Confidence(value)
-	for _, existing := range allowedConfidenceEnumValues {
+	for _, existing := range AllowedConfidenceEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
@@ -59,13 +60,13 @@ func NewConfidenceFromValue(v string) (*Confidence, error) {
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for Confidence: valid values are %v", v, allowedConfidenceEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for Confidence: valid values are %v", v, AllowedConfidenceEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
 func (v Confidence) IsValid() bool {
-	for _, existing := range allowedConfidenceEnumValues {
+	for _, existing := range AllowedConfidenceEnumValues {
 		if existing == v {
 			return true
 		}
