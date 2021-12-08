@@ -24,8 +24,7 @@ const (
 	MATCHTYPE_FULL MatchType = "FULL"
 )
 
-// All allowed values of MatchType enum
-var AllowedMatchTypeEnumValues = []MatchType{
+var allowedMatchTypeEnumValues = []MatchType{
 	"PARTIAL",
 	"FULL",
 }
@@ -37,7 +36,7 @@ func (v *MatchType) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := MatchType(value)
-	for _, existing := range AllowedMatchTypeEnumValues {
+	for _, existing := range allowedMatchTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
@@ -54,13 +53,13 @@ func NewMatchTypeFromValue(v string) (*MatchType, error) {
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for MatchType: valid values are %v", v, AllowedMatchTypeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for MatchType: valid values are %v", v, allowedMatchTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
 func (v MatchType) IsValid() bool {
-	for _, existing := range AllowedMatchTypeEnumValues {
+	for _, existing := range allowedMatchTypeEnumValues {
 		if existing == v {
 			return true
 		}

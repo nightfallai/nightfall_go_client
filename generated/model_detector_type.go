@@ -25,8 +25,7 @@ const (
 	DETECTORTYPE_WORD_LIST DetectorType = "WORD_LIST"
 )
 
-// All allowed values of DetectorType enum
-var AllowedDetectorTypeEnumValues = []DetectorType{
+var allowedDetectorTypeEnumValues = []DetectorType{
 	"NIGHTFALL_DETECTOR",
 	"REGEX",
 	"WORD_LIST",
@@ -39,7 +38,7 @@ func (v *DetectorType) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := DetectorType(value)
-	for _, existing := range AllowedDetectorTypeEnumValues {
+	for _, existing := range allowedDetectorTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
@@ -56,13 +55,13 @@ func NewDetectorTypeFromValue(v string) (*DetectorType, error) {
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for DetectorType: valid values are %v", v, AllowedDetectorTypeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for DetectorType: valid values are %v", v, allowedDetectorTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
 func (v DetectorType) IsValid() bool {
-	for _, existing := range AllowedDetectorTypeEnumValues {
+	for _, existing := range allowedDetectorTypeEnumValues {
 		if existing == v {
 			return true
 		}
