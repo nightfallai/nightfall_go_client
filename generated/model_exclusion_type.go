@@ -24,8 +24,7 @@ const (
 	EXCLUSIONTYPE_WORD_LIST ExclusionType = "WORD_LIST"
 )
 
-// All allowed values of ExclusionType enum
-var AllowedExclusionTypeEnumValues = []ExclusionType{
+var allowedExclusionTypeEnumValues = []ExclusionType{
 	"REGEX",
 	"WORD_LIST",
 }
@@ -37,7 +36,7 @@ func (v *ExclusionType) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := ExclusionType(value)
-	for _, existing := range AllowedExclusionTypeEnumValues {
+	for _, existing := range allowedExclusionTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
@@ -54,13 +53,13 @@ func NewExclusionTypeFromValue(v string) (*ExclusionType, error) {
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for ExclusionType: valid values are %v", v, AllowedExclusionTypeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for ExclusionType: valid values are %v", v, allowedExclusionTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
 func (v ExclusionType) IsValid() bool {
-	for _, existing := range AllowedExclusionTypeEnumValues {
+	for _, existing := range allowedExclusionTypeEnumValues {
 		if existing == v {
 			return true
 		}

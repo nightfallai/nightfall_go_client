@@ -44,7 +44,6 @@ const (
 	NIGHTFALLDETECTORTYPE_GERMANY_IDENTITY_NUMBER NightfallDetectorType = "GERMANY_IDENTITY_NUMBER"
 	NIGHTFALLDETECTORTYPE_GERMANY_PASSPORT NightfallDetectorType = "GERMANY_PASSPORT"
 	NIGHTFALLDETECTORTYPE_GCP_CREDENTIALS NightfallDetectorType = "GCP_CREDENTIALS"
-	NIGHTFALLDETECTORTYPE_HIPAA_DEFINED_PII NightfallDetectorType = "HIPAA_DEFINED_PII"
 	NIGHTFALLDETECTORTYPE_IBAN_CODE NightfallDetectorType = "IBAN_CODE"
 	NIGHTFALLDETECTORTYPE_ICD10_CODE NightfallDetectorType = "ICD10_CODE"
 	NIGHTFALLDETECTORTYPE_ICD10_DIAGNOSIS_DESCRIPTION NightfallDetectorType = "ICD10_DIAGNOSIS_DESCRIPTION"
@@ -59,7 +58,6 @@ const (
 	NIGHTFALLDETECTORTYPE_PASSWORD_IN_CODE NightfallDetectorType = "PASSWORD_IN_CODE"
 	NIGHTFALLDETECTORTYPE_PERSON_NAME NightfallDetectorType = "PERSON_NAME"
 	NIGHTFALLDETECTORTYPE_PHONE_NUMBER NightfallDetectorType = "PHONE_NUMBER"
-	NIGHTFALLDETECTORTYPE_PROTECTED_HEALTH_INFORMATION NightfallDetectorType = "PROTECTED_HEALTH_INFORMATION"
 	NIGHTFALLDETECTORTYPE_RANDOMLY_GENERATED_TOKEN NightfallDetectorType = "RANDOMLY_GENERATED_TOKEN"
 	NIGHTFALLDETECTORTYPE_SCOTLAND_COMMUNITY_HEALTH_INDEX_NUMBER NightfallDetectorType = "SCOTLAND_COMMUNITY_HEALTH_INDEX_NUMBER"
 	NIGHTFALLDETECTORTYPE_STREET_ADDRESS NightfallDetectorType = "STREET_ADDRESS"
@@ -82,8 +80,7 @@ const (
 	NIGHTFALLDETECTORTYPE_US_VEHICLE_IDENTIFICATION_NUMBER NightfallDetectorType = "US_VEHICLE_IDENTIFICATION_NUMBER"
 )
 
-// All allowed values of NightfallDetectorType enum
-var AllowedNightfallDetectorTypeEnumValues = []NightfallDetectorType{
+var allowedNightfallDetectorTypeEnumValues = []NightfallDetectorType{
 	"AMERICAN_BANKERS_CUSIP_ID",
 	"API_KEY",
 	"CANADA_BC_PHN",
@@ -108,7 +105,6 @@ var AllowedNightfallDetectorTypeEnumValues = []NightfallDetectorType{
 	"GERMANY_IDENTITY_NUMBER",
 	"GERMANY_PASSPORT",
 	"GCP_CREDENTIALS",
-	"HIPAA_DEFINED_PII",
 	"IBAN_CODE",
 	"ICD10_CODE",
 	"ICD10_DIAGNOSIS_DESCRIPTION",
@@ -123,7 +119,6 @@ var AllowedNightfallDetectorTypeEnumValues = []NightfallDetectorType{
 	"PASSWORD_IN_CODE",
 	"PERSON_NAME",
 	"PHONE_NUMBER",
-	"PROTECTED_HEALTH_INFORMATION",
 	"RANDOMLY_GENERATED_TOKEN",
 	"SCOTLAND_COMMUNITY_HEALTH_INDEX_NUMBER",
 	"STREET_ADDRESS",
@@ -153,7 +148,7 @@ func (v *NightfallDetectorType) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := NightfallDetectorType(value)
-	for _, existing := range AllowedNightfallDetectorTypeEnumValues {
+	for _, existing := range allowedNightfallDetectorTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
@@ -170,13 +165,13 @@ func NewNightfallDetectorTypeFromValue(v string) (*NightfallDetectorType, error)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for NightfallDetectorType: valid values are %v", v, AllowedNightfallDetectorTypeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for NightfallDetectorType: valid values are %v", v, allowedNightfallDetectorTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
 func (v NightfallDetectorType) IsValid() bool {
-	for _, existing := range AllowedNightfallDetectorTypeEnumValues {
+	for _, existing := range allowedNightfallDetectorTypeEnumValues {
 		if existing == v {
 			return true
 		}
